@@ -2,18 +2,21 @@
 #include <stdlib.h>
 #include <Windows.h> //Sleep() ve system("CLS") fonksiyonlarý için kullanýldý
 #include <conio.h>
+#include <string.h> //Used for strlen function in MirrorNumber
 
 int Fibonacci(int x);
+void MirrorNumber(char *number);
 
 int main(int argc, char *argv[]) {
 	int programNo;
 	int i, j, flag, number=3, rank=2; //Program No:1 variables
 	char selection;	//Program No:1 variables
-	int sayi1, sayi2, secim, kucukOlanSayi, buyukOlanSayi, ebob, ekok; //Program No:2 variables
+	int k, sayi1, sayi2, secim, kucukOlanSayi, buyukOlanSayi, ebob, ekok; //Program No:2 variables
 	int secim3; //Program No:3 variables
+	char number4[10]; int inputNumber; //Program No:4 variables
 
-	printf(" ==========SEZGIN ERPAYTONCU==========\n =====================================\n\n Please enter the program that you want to run...\n");
-	printf(" 1.Prime Number Generator\n 2.Finding Greatest Common Divisor & Smallest Common Multiple\n 3.Fibonacci Numbers\n ");
+	printf(" =====================================\n ==========SEZGIN ERPAYTONCU==========\n =====================================\n\n Please enter the program that you want to run...\n");
+	printf(" 1.Prime Number Generator\n 2.Finding Greatest Common Divisor & Smallest Common Multiple\n 3.Fibonacci Numbers\n 4.Mirror of Entered Number\n\n");
 	scanf("%d", &programNo);
 
 	switch(programNo){
@@ -47,7 +50,9 @@ int main(int argc, char *argv[]) {
 	
 		case 2: //GCD and SCM
 			while(1){
-				printf(" \n Please select an action...\n 1.Finding greatest common divisor\n 2.Finding smallest common multiple\n 3.Exit\n");
+				system("CLS");
+				fflush(stdin);
+				printf(" \n Please select an action...\n 1.Finding greatest common divisor\n 2.Finding smallest common multiple\n 3.EXIT\n");
 				scanf("%d", &secim);
 				if(secim==1||secim==2){
 					printf(" Please enter the first number...\n");
@@ -68,36 +73,38 @@ int main(int argc, char *argv[]) {
 								if(sayi1%i==0 && sayi2%i==0)
 									ebob=i;
 							}
-							printf(" \nThe greatest divisor of %d and %d is %d\n",sayi1,sayi2,ebob);
-							getch();
-							fflush(stdin);
+							printf("\n The greatest divisor of %d and %d is %d\n",sayi1,sayi2,ebob);
 							break;
 						case 2: //EKOK Bulma
-							//int i=buyukOlanSayi;
+							k=buyukOlanSayi;
 							do{
-								if(i%sayi1==0 && i%sayi2==0){
-									ekok=i;
+								if(k%sayi1==0 && k%sayi2==0){
+									ekok=k;
 									break;
 								}
+								k++;
 							}while(1);
 							/*Alternatif Yol
 							sayi1*sayi2=ebob*ekok
 							ekok=(sayi1*sayi2)/ebob(sayi1,sayi2);*/
-							printf(" \nThe smallest common multiple of %d and %d is %d\n",sayi1,sayi2,ekok);
+							printf("\n The smallest common multiple of %d and %d is %d\n",sayi1,sayi2,ekok);
 							break;
 					}
+					getch();
+					fflush(stdin);
 				}
-					else if(secim==3)
-						break;
-					else{
-						printf(" Yanlis giris yaptiniz.Lutfen tekrar deneyiniz...\n");
-						continue;
-					}
-				
+				else if(secim==3)
+					break;
+				else{
+					printf(" Yanlis giris yaptiniz.Lutfen tekrar deneyiniz...\n");
+					continue;
+				}	
 			}
 			break; //End of Program No:2
 		
 		case 3: //Fibonacci
+			system("CLS");
+			fflush(stdin);
 			printf(" Please enter which Fibonacci number that you want to see...\n If you want to QUIT the program, please enter \"0 (ZERO)\"...\n");
 			scanf("%d", &secim3);
 			/*if(selection=='Q'||selection=='q')
@@ -109,7 +116,16 @@ int main(int argc, char *argv[]) {
 			break; //End of Program No:3
 			
 		case 4: //Mirror of the entered number
-			
+			system("CLS");
+			fflush(stdin);
+			printf(" Please enter the number that you want to see mirrored...\n");
+			gets(number4);
+			//scanf("%s", number4); //gets ile ayný
+			printf(" Your number: %s\n", number4);
+			//char s[10];
+			//printf("%s\n", s[10]);
+			MirrorNumber(number4);
+			printf(" Mirrored number: %s\n", number4);
 			break; //End of Program No:4
 		default:
 			printf("You have entered an incorrect value...\n");
@@ -128,3 +144,20 @@ int Fibonacci(int x){
 	result = Fibonacci(x-1)+Fibonacci(x-2);
 	return result;
 }
+
+void MirrorNumber(char *number){
+	int i, size;
+	char temporary[10];
+	//size=sizeof(number); //gelen array 10 elemanlý oluþturulmuþtu. Yani 8 element ve en of string "\0" içeriyor. Bu yüzden sizeof() kullanýldýðýnda sonuç ne yazarsan yaz 8 geliyor.
+	size = strlen(number);
+	printf(" Number of digits: %d\n", size); //for debugging
+	for(i=0;i<size;i++){
+		temporary[i]=number[i];
+	}
+	//printf(" Temporary array is created\n"); //for debugging
+	for(i=0;i<size;i++){
+		number[i]=temporary[(size-1)-i];
+	}
+	printf(" Mirror array is created: %s\n", number); //for debugging
+}
+
