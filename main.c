@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 	int k, sayi1, sayi2, secim, kucukOlanSayi, buyukOlanSayi, ebob, ekok; //Program No:2 variables
 	int secim3; //Program No:3 variables
 	char number4[10]; int inputNumber; //Program No:4 variables
+	//int number5, p, geciciSayi, basamakSayisi=0, basamaklar[basamakSayisi]; // Alternative Program No:4 variables
 
 	while(programNo!=5){
 		system("CLS");
@@ -71,14 +72,14 @@ int main(int argc, char *argv[]) {
 							buyukOlanSayi=sayi1;
 						}
 						switch(secim){
-							case 1: //EBOB Bulma
+							case 1: //Finding GCD / EBOB Bulma
 								for(i=1;i<=kucukOlanSayi;i++){
 									if(sayi1%i==0 && sayi2%i==0)
 										ebob=i;
 								}
 								printf("\n The greatest divisor of %d and %d is %d\n",sayi1,sayi2,ebob);
 								break;
-							case 2: //EKOK Bulma
+							case 2: //Finding SCM / EKOK Bulma
 								k=buyukOlanSayi;
 								do{
 									if(k%sayi1==0 && k%sayi2==0){
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
 									}
 									k++;
 								}while(1);
-								/*Alternatif Yol
+								/*	//Alternatif EBOB Bulma Yolu
 								sayi1*sayi2=ebob*ekok
 								ekok=(sayi1*sayi2)/ebob(sayi1,sayi2);*/
 								printf("\n The smallest common multiple of %d and %d is %d\n",sayi1,sayi2,ekok);
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]) {
 					else if(secim==3)
 						break;
 					else{
-						printf(" Yanlis giris yaptiniz.Lutfen tekrar deneyiniz...\n");
+						printf(" You have entered an incorrect value.Please try again...\n");
 						continue;
 					}	
 				}
@@ -122,13 +123,29 @@ int main(int argc, char *argv[]) {
 				system("CLS");
 				fflush(stdin);
 				printf(" Please enter the number that you want to see mirrored...\n");
-				gets(number4);
-				//scanf("%s", number4); //gets ile ayný
+				scanf("%s", number4); //gets ile ayný
 				printf(" Your number: %s\n", number4);
-				//char s[10];
-				//printf("%s\n", s[10]);
 				MirrorNumber(number4);
 				printf(" Mirrored number: %s\n", number4);
+				
+				/* Alternatif2
+				scanf("%d", &number5);
+				geciciSayi=number5;
+				while(1){
+					if(geciciSayi==0)
+						break;
+				basamakSayisi++;
+				geciciSayi/=10;		
+				}
+				for(p=0;p<basamakSayisi;p++){
+					basamaklar[p]=number5%10;
+					number5=number5/10;
+				}
+				//printf("%d\n", basamakSayisi);
+				for(p=0;p<basamakSayisi;p++){
+					printf("%d", basamaklar[p]);
+				}*/
+				getch();
 				break; //End of Program No:4
 			case 5:
 				programNo=5;
@@ -169,4 +186,3 @@ void MirrorNumber(char *number){
 	}
 	printf(" Mirror array is created: %s\n", number); //for debugging
 }
-
